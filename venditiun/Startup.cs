@@ -63,7 +63,7 @@ namespace venditum
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Access}/{action=Login}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
