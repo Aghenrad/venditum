@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Venditiun | @ViewData["Title"]</title>
-   <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/vendors/metro4/css/metro-all.min.css">
     <link rel="stylesheet" href="~/css/index.css">
@@ -43,7 +42,7 @@
             </a>
 
             <ul class="app-bar-menu">
-                <li><a href="#">Projekty</a></li>
+                <li>@Html.ActionLink("Projekty", "Index", "Projects")</li>
                 <li>
                     <a href="#" class="dropdown-toggle">Produkty</a>
                     <ul class="d-menu" data-role="dropdown">
@@ -70,7 +69,6 @@
     </div>    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> 
     <script src="~/vendors/jquery/jquery-3.4.1.min.js"></script>
     <script src="~/vendors/metro4/js/metro.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
