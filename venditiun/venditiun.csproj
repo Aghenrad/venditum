@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\ecommerce.css.map" />
+    <None Include="wwwroot\css\ecommerce.less" />
+    <None Include="wwwroot\css\index.css.map" />
+    <None Include="wwwroot\css\index.less" />
+    <None Include="wwwroot\css\mailbox.less" />
+    <None Include="wwwroot\css\wizards.less" />
+    <None Include="wwwroot\js\charts.js" />
+    <None Include="wwwroot\js\index.js" />
+    <None Include="wwwroot\js\metro.js" />
+    <None Include="wwwroot\js\metro.min.js" />
+    <None Include="wwwroot\js\metro.min.js.map" />
     <None Include="wwwroot\js\site.js" />
   </ItemGroup>
 
