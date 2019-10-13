@@ -8,7 +8,7 @@ namespace venditiun.Controllers
 {
     public class AccessController : Controller
     {
-        public IActionResult Login()
+        public ActionResult Login()
         {
             return View();
         }

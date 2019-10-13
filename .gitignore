@@ -328,3 +328,7 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+/venditiun/Data/VenditiunDbContext.cs
+/venditiun/Migrations/20191012132511_InitialCreate.cs
+/venditiun/Migrations/20191012132511_InitialCreate.Designer.cs
+/venditiun/Migrations/VenditiunDbContextModelSnapshot.cs
