@@ -5,6 +5,10 @@
     <UserSecretsId>aspnet-venditum-0068588B-DA82-484B-BFAD-793E74D0198B</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\site.js" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
