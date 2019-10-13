@@ -6,6 +6,8 @@
     <title>Venditiun | @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/vendors/metro4/css/metro-all.min.css">
+    <link rel="stylesheet" href="~/css/index.css">
 </head>
 <body>
     <header>
@@ -17,19 +19,19 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     @*<li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>*@
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>*@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Projekty</a>
                     </li>
                     @*<li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>*@
+                            <a class="nav-link disabled" href="#">Disabled</a>
+                        </li>*@
                 </ul>
                 @*<form class="form-inline mt-2 mt-md-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>*@
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>*@
             </div>
         </nav>
     </header>
@@ -46,6 +48,8 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendors/jquery/jquery-3.4.1.min.js"></script>
+    <script src="~/vendors/metro4/js/metro.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
