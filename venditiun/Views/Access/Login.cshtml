@@ -1,7 +1,39 @@
-﻿
-@{
-    ViewData["Title"] = "Logowanie";
-}
+﻿    @{
+        ViewData["Title"] = "Logowanie";
+    }
 
-<h1>Logowanie</h1>
+<body class="m4-cloak h-vh-100 d-flex flex-justify-center flex-align-center">
 
+<div class="login-box pos-center">
+    <form class="bg-white p-4"
+          action="javascript:"
+          data-role="validator"
+          data-clear-invalid="2000"
+          data-on-error-form="invalidForm"
+    >
+        <img src="images/p-120x120.png" class="place-right mt-4-minus mr-6-minus">
+        <h1 class="mb-0">Login</h1>
+        <div class="form-group">
+            <input type="text" data-role="input" placeholder="Nazwa użytkownika" data-append="<span class='mif-envelop'>" data-validate="required">
+            <span class="invalid_feedback">Proszę podać nazwę użytkownika</span>
+        </div>
+        <div class="form-group">
+            <input type="password" data-role="input" placeholder="Hasło" data-append="<span class='mif-key'>" data-validate="required">
+            <span class="invalid_feedback">Proszę podać hasło</span>
+        </div>
+        <div class="form-group d-flex flex-align-center flex-justify-between">
+            <button class="button primary">Zaloguj się!</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function invalidForm(){
+        var form  = $(this);
+        form.addClass("ani-horizontal");
+        setTimeout(function(){
+            form.removeClass("ani-horizontal");
+        }, 1000);
+    }
+</script>
+</body>
