@@ -19,14 +19,12 @@ namespace venditiun.Controllers
             _context = context;
         }
 
-        // GET: Projects
         [Route("Projects")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Project.ToListAsync());
         }
 
-        // GET: Projects/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,19 +42,23 @@ namespace venditiun.Controllers
             return View(project);
         }
 
-        // GET: Projects/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Projects/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,ProjectName,CreatedBy,CreatedTime,UpdatedBy,UpdatedTime")] Project project)
+        public async Task<IActionResult> Create([Bind("ProjectId,ProjectName")] Project project)
         {
+            // Add userId with user authorization 
+            project.CreatedBy = 1;
+            project.UpdatedBy = 1;
+            // Add userId with user authorization 
+
+            project.CreatedTime = DateTime.Now;
+            project.UpdatedTime = DateTime.Now;
+
             if (ModelState.IsValid)
             {
                 _context.Add(project);
@@ -66,7 +68,6 @@ namespace venditiun.Controllers
             return View(project);
         }
 
-        // GET: Projects/Edit/5
         [Route("Projects/Edit")]
         public async Task<IActionResult> Edit(int? id)
         {
