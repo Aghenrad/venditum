@@ -6348,7 +6348,6 @@ var core_layouts = {
 		var verticalBoxWidth = (width - chartAreaWidth) / verticalBoxes.length;
 
 		// Step 3
-		// TODO re-limit horizontal axis height (this limit has affected only padding calculation since PR 1837)
 		// var horizontalBoxHeight = (height - chartAreaHeight) / horizontalBoxes.length;
 
 		// Step 4
@@ -8637,7 +8636,6 @@ helpers$1.extend(Chart.prototype, /** @lends Chart */ {
 
 			scale.mergeTicksOptions();
 
-			// TODO(SB): I think we should be able to remove this custom case (options.scale)
 			// and consider it as a regular scale part of the "scales"" map only! This would
 			// make the logic easier and remove some useless? custom code.
 			if (item.isDefault) {
@@ -10570,7 +10568,6 @@ var core_scale = core_element.extend({
 				var cosRotation = Math.cos(angleRadians);
 				var sinRotation = Math.sin(angleRadians);
 
-				// TODO - improve this calculation
 				var labelHeight = (sinRotation * largestTextWidth)
 					+ (tickFont.lineHeight * tallestLabelHeightInLines)
 					+ lineSpace; // padding
@@ -11738,7 +11735,6 @@ var defaultConfig$2 = {
 	}
 };
 
-// TODO(v3): change this to positiveOrDefault
 function nonNegativeOrDefault(value, defaultValue) {
 	return helpers$1.isFinite(value) && value >= 0 ? value : defaultValue;
 }
@@ -13679,7 +13675,6 @@ var moment = createCommonjsModule(function (module, exports) {
         this._config = config;
         // Lenient ordinal parsing accepts just a number in addition to
         // number + (possibly) stuff coming from _dayOfMonthOrdinalParse.
-        // TODO: Remove "ordinalParse" fallback in next major release.
         this._dayOfMonthOrdinalParseLenient = new RegExp(
             (this._dayOfMonthOrdinalParse.source || this._ordinalParse.source) +
                 '|' + (/\d{1,2}/).source);
@@ -14322,7 +14317,6 @@ var moment = createCommonjsModule(function (module, exports) {
             this._shortMonthsParse = [];
         }
 
-        // TODO: add sorting
         // Sorting makes sure if one month (or abbr) is a prefix of another
         // see sorting in computeMonthsParse
         for (i = 0; i < 12; i++) {
@@ -14362,7 +14356,6 @@ var moment = createCommonjsModule(function (module, exports) {
                 value = toInt(value);
             } else {
                 value = mom.localeData().monthsParse(value);
-                // TODO: Another silent failure?
                 if (!isNumber(value)) {
                     return mom;
                 }
@@ -15167,7 +15160,6 @@ var moment = createCommonjsModule(function (module, exports) {
 
     function loadLocale(name) {
         var oldLocale = null;
-        // TODO: Find a better way to register and load all the locales in Node
         if (!locales[name] && ('object' !== 'undefined') &&
                 module && module.exports) {
             try {
@@ -15447,7 +15439,6 @@ var moment = createCommonjsModule(function (module, exports) {
             dow = 1;
             doy = 4;
 
-            // TODO: We need to take the current isoWeekYear, but that depends on
             // how we interpret now (local, utc, fixed offset). So create
             // a now version of current config (take local/utc/offset flags, and
             // create now).
@@ -15622,7 +15613,6 @@ var moment = createCommonjsModule(function (module, exports) {
 
     function checkWeekday(weekdayStr, parsedInput, config) {
         if (weekdayStr) {
-            // TODO: Replace the vanilla JS Date object with an indepentent day-of-week check.
             var weekdayProvided = defaultLocaleWeekdaysShort.indexOf(weekdayStr),
                 weekdayActual = new Date(parsedInput[0], parsedInput[1], parsedInput[2]).getDay();
             if (weekdayProvided !== weekdayActual) {
@@ -15726,7 +15716,6 @@ var moment = createCommonjsModule(function (module, exports) {
 
     // date from string and format string
     function configFromStringAndFormat(config) {
-        // TODO: Move this to another part of the creation flow to prevent circular deps
         if (config._f === hooks.ISO_8601) {
             configFromISO(config);
             return;
@@ -16021,7 +16010,6 @@ var moment = createCommonjsModule(function (module, exports) {
         return res;
     }
 
-    // TODO: Use [].sort instead?
     function min () {
         var args = [].slice.call(arguments, 0);
 
@@ -16452,7 +16440,6 @@ var moment = createCommonjsModule(function (module, exports) {
         return res;
     }
 
-    // TODO: remove 'name' arg after deprecation is removed
     function createAdder(direction, name) {
         return function (val, period) {
             var dur, tmp;
@@ -17080,7 +17067,6 @@ var moment = createCommonjsModule(function (module, exports) {
     addRegexToken('D',  match1to2);
     addRegexToken('DD', match1to2, match2);
     addRegexToken('Do', function (isStrict, locale) {
-        // TODO: Remove "ordinalParse" fallback in next major release.
         return isStrict ?
           (locale._dayOfMonthOrdinalParse || locale._ordinalParse) :
           locale._dayOfMonthOrdinalParseLenient;
@@ -17612,7 +17598,6 @@ var moment = createCommonjsModule(function (module, exports) {
         }
     }
 
-    // TODO: Use this.as('ms')?
     function valueOf$1 () {
         if (!this.isValid()) {
             return NaN;

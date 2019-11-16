@@ -12,7 +12,6 @@ namespace venditiun.Models
         
         public string Name { get; set; }
         
-        // TODO define Privileges
         public bool Privilege1 { get; set; }
 
         public bool Privilege2 { get; set; }
