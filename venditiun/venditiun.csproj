@@ -17,6 +17,7 @@
     <None Include="wwwroot\js\metro.js" />
     <None Include="wwwroot\js\metro.min.js" />
     <None Include="wwwroot\js\metro.min.js.map" />
+    <None Include="wwwroot\mif\metro.svg" />
   </ItemGroup>
 
 
