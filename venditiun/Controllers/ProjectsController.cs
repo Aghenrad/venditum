@@ -19,12 +19,13 @@ namespace venditiun.Controllers
             _context = context;
         }
 
-        [Route("Projects")]
+        // GET: Projects
         public async Task<IActionResult> Index()
         {
             return View(await _context.Project.ToListAsync());
         }
 
+        // GET: Projects/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,7 +34,7 @@ namespace venditiun.Controllers
             }
 
             var project = await _context.Project
-                .FirstOrDefaultAsync(m => m.ProjectId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (project == null)
             {
                 return NotFound();
@@ -42,23 +43,19 @@ namespace venditiun.Controllers
             return View(project);
         }
 
+        // GET: Projects/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        // POST: Projects/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProjectId,ProjectName")] Project project)
+        public async Task<IActionResult> Create([Bind("Id,Name,Decription,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Project project)
         {
-            // Add userId with user authorization 
-            project.CreatedBy = 1;
-            project.UpdatedBy = 1;
-            // Add userId with user authorization 
-
-            project.CreatedTime = DateTime.Now;
-            project.UpdatedTime = DateTime.Now;
-
             if (ModelState.IsValid)
             {
                 _context.Add(project);
@@ -68,7 +65,7 @@ namespace venditiun.Controllers
             return View(project);
         }
 
-        [Route("Projects/Edit")]
+        // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -89,9 +86,9 @@ namespace venditiun.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProjectId,ProjectName,CreatedBy,CreatedTime,UpdatedBy,UpdatedTime")] Project project)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Decription,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Project project)
         {
-            if (id != project.ProjectId)
+            if (id != project.Id)
             {
                 return NotFound();
             }
@@ -105,7 +102,7 @@ namespace venditiun.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProjectExists(project.ProjectId))
+                    if (!ProjectExists(project.Id))
                     {
                         return NotFound();
                     }
@@ -128,7 +125,7 @@ namespace venditiun.Controllers
             }
 
             var project = await _context.Project
-                .FirstOrDefaultAsync(m => m.ProjectId == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (project == null)
             {
                 return NotFound();
@@ -150,7 +147,7 @@ namespace venditiun.Controllers
 
         private bool ProjectExists(int id)
         {
-            return _context.Project.Any(e => e.ProjectId == id);
+            return _context.Project.Any(e => e.Id == id);
         }
     }
 }
