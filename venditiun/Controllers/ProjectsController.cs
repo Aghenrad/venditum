@@ -58,6 +58,13 @@ namespace venditiun.Controllers
         {
             if (ModelState.IsValid)
             {
+                // TODO add user id after authorization complete
+                project.CreatedBy = 1;
+                project.UpdatedBy = 1;
+
+                project.CreatedDate = DateTime.Now;
+                project.UpdatedDate = DateTime.Now;
+
                 _context.Add(project);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
