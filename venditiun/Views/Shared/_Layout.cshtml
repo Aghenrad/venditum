@@ -16,8 +16,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li>@Html.ActionLink("Projekty", "Index", "Projects")</li>
-
+                    <liS>@Html.ActionLink("Projekty", "Index", "Projects", null, new {@class = "nav-link"})</liS>
+                    <liS>@Html.ActionLink("Profil", "Index", "Profile", null, new {@class = "nav-link"})</liS>
                 </ul>
             </div>
         </nav>
@@ -28,12 +28,13 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - venditum
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2019 - Venditiun
+    </div>
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
