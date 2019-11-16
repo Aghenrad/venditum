@@ -11413,8 +11413,6 @@ Metro.plugin('hint', Hint);
 
 // Source: js/plugins/html-container.js
 
-// TODO source as array, mode as array
-
 var HtmlContainerDefaultConfig = {
     method: "get",
     htmlSource: null,
@@ -18810,7 +18808,7 @@ var SplitterDefaultConfig = {
     gutterSize: 4,
     minSizes: null,
     children: "*",
-    gutterClick: "expand", // TODO expand or collapse
+    gutterClick: "expand",
     saveState: false,
     onResizeStart: Metro.noop,
     onResizeStop: Metro.noop,
@@ -24097,7 +24095,7 @@ var Touch = {
                     //Trigger the event
                     element.trigger('hold', [event.target]);
                     //Fire the callback
-                    if (options.onHold !== Metro.noop) { // TODO Remove this if
+                    if (options.onHold !== Metro.noop) { 
                         ret = Utils.exec(options.onHold, [event, event.target], element[0]);
                         element.fire("hold", {
                             event: event,

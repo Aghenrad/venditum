@@ -2498,7 +2498,6 @@ $.extend({
 
 // Source: src/manipulation.js
 
-// TODO optimise promises append, prepend to one definition
 (function (arr) {
     arr.forEach(function (item) {
         if (item.hasOwnProperty('append')) {
@@ -2990,7 +2989,6 @@ $.extend({
         $el.origin("animation-stop", 0);
 
         if (isPlainObject(draw)) {
-            // TODO add prop value as array [from, to]
             for (key in draw) {
                 if (draw.hasOwnProperty(key)) {
                     if (!Array.isArray(draw[key])) {
@@ -9708,7 +9706,7 @@ var CalendarPicker = {
         }, {ns: container.attr("id")});
 
         if (clear.length > 0) clear.on(Metro.events.click, function(e){
-            element.val("").trigger('change').blur(); // TODO change blur
+            element.val("").trigger('change').blur(); 
             that.value = null;
             e.preventDefault();
             e.stopPropagation();
@@ -14630,9 +14628,6 @@ $(document).on(Metro.events.keyup + ".hotkey-data", function(e){
     }
 });
 
-// TODO add destroy
-
-// TODO source as array, mode as array
 
 var HtmlContainerDefaultConfig = {
     method: "get",
@@ -22887,7 +22882,7 @@ var SplitterDefaultConfig = {
     gutterSize: 4,
     minSizes: null,
     children: "*",
-    gutterClick: "expand", // TODO expand or collapse
+    gutterClick: "expand",
     saveState: false,
     onResizeStart: Metro.noop,
     onResizeStop: Metro.noop,
@@ -28537,7 +28532,7 @@ var Touch = {
                     //Trigger the event
                     element.trigger('hold', [event.target]);
                     //Fire the callback
-                    if (options.onHold !== Metro.noop) { // TODO Remove this if
+                    if (options.onHold !== Metro.noop) {
                         ret = Utils.exec(options.onHold, [event, event.target], element[0]);
                         element.fire("hold", {
                             event: event,
