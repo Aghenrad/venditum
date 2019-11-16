@@ -1,39 +1,71 @@
 ﻿    @{
         ViewData["Title"] = "Logowanie";
     }
+    <head>
+        <style type="text/css">
+            .login-form 
+            {
+                width: 340px;
+                margin: 50px auto;
+            }
 
-<body class="m4-cloak h-vh-100 d-flex flex-justify-center flex-align-center">
+            .login-form form 
+            {
+                margin-bottom: 15px;
+                background: #f7f7f7;
+                -webkit-box-shadow: -1px 1px 5px 9px rgba(0,0,0,0.3);
+                -moz-box-shadow: -1px 1px 5px 9px rgba(0,0,0,0.3);
+                box-shadow: -1px 1px 5px 9px rgba(0,0,0,0.3);
+                padding: 30px;
+            }
 
-<div class="login-box pos-center">
-    <form class="bg-white p-4"
-          action="javascript:"
-          data-role="validator"
-          data-clear-invalid="2000"
-          data-on-error-form="invalidForm"
-    >
-        <img src="images/p-120x120.png" class="place-right mt-4-minus mr-6-minus">
-        <h1 class="mb-0">Login</h1>
-        <div class="form-group">
-            <input type="text" data-role="input" placeholder="Nazwa użytkownika" data-append="<span class='mif-envelop'>" data-validate="required">
-            <span class="invalid_feedback">Proszę podać nazwę użytkownika</span>
-        </div>
-        <div class="form-group">
-            <input type="password" data-role="input" placeholder="Hasło" data-append="<span class='mif-key'>" data-validate="required">
-            <span class="invalid_feedback">Proszę podać hasło</span>
-        </div>
-        <div class="form-group d-flex flex-align-center flex-justify-between">
-            <button class="button primary">Zaloguj się!</button>
-        </div>
-    </form>
-</div>
+                .login-form h2 {
+                    margin: 0 0 15px;
+                }
 
-<script>
-    function invalidForm(){
-        var form  = $(this);
-        form.addClass("ani-horizontal");
-        setTimeout(function(){
-            form.removeClass("ani-horizontal");
-        }, 1000);
-    }
-</script>
-</body>
+            .form-control, .btn {
+                min-height: 38px;
+                border-radius: 2px;
+            }
+
+            .btn {
+                font-size: 15px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+
+    <body class="m4-cloak h-vh-100 d-flex flex-justify-center flex-align-center">
+
+        <div class="login-form">
+            <form class="bg-white p-4"
+                  action="javascript:"
+                  data-role="validator"
+                  data-clear-invalid="2000"
+                  data-on-error-form="invalidForm">
+                <h2 class="text-center">Logowanie</h2>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Login" required="required">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Hasło" required="required">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Zaloguj się</button>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            function invalidForm() {
+                var form = $(this);
+                form.addClass("ani-horizontal");
+                setTimeout(function () {
+                    form.removeClass("ani-horizontal");
+                }, 1000);
+            }
+        </script>
+
+        
+
+    </body>
