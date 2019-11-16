@@ -6,14 +6,22 @@ using System.Threading.Tasks;
 
 namespace venditiun.Models
 {
-    public class Project
+    public class Job
     {
         public int Id { get; set; }
-        
-        public string Name { get; set; }
+
+        public int TaskId { get; set; }
+
+        public string UserId { get; set; }
         
         public string Decription { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime BeginDate { get; set; }
         
+        [DataType(DataType.Date)]
+        public DateTime EndDate { get; set; }
+
         public int CreatedBy { get; set; }
         
         [DataType(DataType.Date)]
