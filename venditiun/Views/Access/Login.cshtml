@@ -1,75 +1,70 @@
-﻿    @{
-        ViewData["Title"] = "Logowanie";
-    }
-    <head>
-        <style type="text/css">
-            .login-form 
-            {
-                width: 340px;
-                margin: 50px auto;
-            }
+﻿@{
+    ViewData["Title"] = "Logowanie";
+}
+<head>
+    <style type="text/css">
+        .login-form {
+            width: 340px;
+            margin: 50px auto;
+        }
 
-            .login-form form 
-            {
+            .login-form form {
                 margin-bottom: 15px;
                 background: #f7f7f7;
                 padding: 30px;
             }
 
-                .login-form h2 {
-                    margin: 0 0 15px;
-                }
-
-            .form-control, .btn {
-                min-height: 38px;
-                border-radius: 2px;
+            .login-form h2 {
+                margin: 0 0 15px;
             }
 
-            .btn {
-                font-size: 15px;
-                font-weight: bold;
-            }
+        .form-control, .btn {
+            min-height: 38px;
+        }
 
-            .icon
-            {
-                margin-bottom: 15px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-        </style>
-    </head>
+        .btn {
+            font-size: 15px;
+            font-weight: bold;
+        }
 
-    <body class="m4-cloak h-vh-100 d-flex flex-justify-center flex-align-center">
+        .icon {
+            margin-bottom: 15px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
 
-        <div class="login-form">
-            <form class="bg-white p-4"
-                  action="javascript:"
-                  data-role="validator"
-                  data-clear-invalid="2000"
-                  data-on-error-form="invalidForm">
-                <img src="~/css/images/VT120.png" class="icon" />
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Login" required="required">
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Hasło" required="required">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Zaloguj się</button>
-                </div>
-            </form>
-        </div>
+<body class="m4-cloak h-vh-100 d-flex flex-justify-center flex-align-center">
 
-        <script>
-            function invalidForm() {
-                var form = $(this);
-                form.addClass("ani-horizontal");
-                setTimeout(function () {
-                    form.removeClass("ani-horizontal");
-                }, 1000);
-            }
-        </script>
+    <div class="login-form">
+        <form class="bg-white p-4"
+              align="center"
+              action="javascript:"
+              data-role="validator"
+              data-clear-invalid="2000"
+              data-on-error-form="invalidForm">
+            <img src="~/css/images/VT120.png" class="icon" />
+            <input type="text" class="form-control" placeholder="Login" required="required" style="margin-bottom:-1px; border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;">
+            <input type="password" class="form-control" placeholder="Hasło" required="required" style="border-top-left-radius: 0;
+    border-top-right-radius: 0;">
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary btn-block">Zaloguj się</button>
+            </div>
+        </form>
+    </div>
 
-        
+    <script>
+        function invalidForm() {
+            var form = $(this);
+            form.addClass("ani-horizontal");
+            setTimeout(function () {
+                form.removeClass("ani-horizontal");
+            }, 1000);
+        }
+    </script>
 
-    </body>
+
+
+</body>

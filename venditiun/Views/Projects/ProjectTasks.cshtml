@@ -1,0 +1,104 @@
+﻿@model venditiun.Models.Project
+
+@{
+    ViewData["Title"] = "Szczegóły";
+}
+
+<h1>Szczegóły projektu: @Html.DisplayFor(model => model.Name)</h1>
+
+<div>
+    <h4>@Html.DisplayFor(model => model.Decription)</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            Stworzone przez
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+        <dt class="col-sm-3">
+            Data utworzenia
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt class="col-sm-3">
+            Zaktualizowane przez
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.UpdatedBy)
+        </dd>
+        <dt class="col-sm-3">
+            Data aktualizacji
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.UpdatedDate)
+        </dd>
+    </dl>
+    <hr />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Nazwa
+                </th>
+                <th>
+                    Opis
+                </th>
+                <th>
+                    Stworzone przez
+                </th>
+                <th>
+                    Data utworzenia
+                </th>
+                <th>
+                    Zaktualizowane przez
+                </th>
+                <th>
+                    Data aktualizacji
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in Model.Tasks)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modeltask => task.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modeltask => task.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modeltask => task.Decription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modeltask => task.CreatedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modeltask => task.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modeltask => task.UpdatedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modeltask => task.UpdatedDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@task.Id">Edytuj</a> |
+                    <a asp-action="ProjectTasks" asp-route-id="@task.Id">Szczegóły</a> |
+                    <a asp-action="Delete" asp-route-id="@task.Id">Usuń</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a> |
+    <a asp-action="Index">Powróć o listy projektów</a>
+</div>

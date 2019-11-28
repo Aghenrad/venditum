@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,13 +21,19 @@ namespace venditiun.Models
 
         public int CreatedBy { get; set; }
         
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime CreatedDate { get; set; }
 
         public int UpdatedBy { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime UpdatedDate { get; set; }
 
+
+        public List<Job> Jobs { get; set; }
+
+        public List<TaskUserMap> TaskUser { get; set; }
+
+        public Project Project { get; set; }
     }
 }

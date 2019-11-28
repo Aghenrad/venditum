@@ -10,72 +10,59 @@ using venditum.Data;
 
 namespace venditiun.Controllers
 {
-    public class ProjectsController : Controller
+    public class TasksController : Controller
     {
         private readonly VenditiunDbContext _context;
 
-        public ProjectsController(VenditiunDbContext context)
+        public TasksController(VenditiunDbContext context)
         {
             _context = context;
         }
 
-        [Route("/Projects/")]
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Project.ToListAsync());
-        }
-
-        [Route("/Project/{id}/Tasks/")]
-        public async Task<IActionResult> ProjectTasks(int? id)
+        [Route("/Project/Task/Detail/{id}")]
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var project = await _context.Project
+            var task = await _context.Task
+                .Include(t => t.Project)
                 .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (project == null)
+            if (task == null)
             {
                 return NotFound();
             }
 
-            project.Tasks = _context.Task
-                .Where(t => t.ProjectId == id)
-                .ToList();
-
-            return View(project);
+            return View(task);
         }
 
-        [Route("/Projects/Create")]
+        // GET: Tasks/Create
         public IActionResult Create()
         {
+            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id");
             return View();
         }
 
+        // POST: Tasks/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("/Projects/Create")]
-        public async Task<IActionResult> Create([Bind("Id,Name,Decription,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Project project)
+        public async Task<IActionResult> Create([Bind("Id,ProjectId,Name,Decription,Status,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Models.Task task)
         {
             if (ModelState.IsValid)
             {
-                // TODO add user id after authorization complete
-                project.CreatedBy = 1;
-                project.UpdatedBy = 1;
-
-                project.CreatedDate = DateTime.Now;
-                project.UpdatedDate = DateTime.Now;
-
-                _context.Add(project);
+                _context.Add(task);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(project);
+            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id", task.ProjectId);
+            return View(task);
         }
 
-        [Route("/Projects/{id}/Edit/")]
+        // GET: Tasks/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,20 +70,23 @@ namespace venditiun.Controllers
                 return NotFound();
             }
 
-            var project = await _context.Project.FindAsync(id);
-            if (project == null)
+            var task = await _context.Task.FindAsync(id);
+            if (task == null)
             {
                 return NotFound();
             }
-            return View(project);
+            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id", task.ProjectId);
+            return View(task);
         }
 
+        // POST: Tasks/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("/Projects/{id}/Edit/")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Decription,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Project project)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ProjectId,Name,Decription,Status,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Models.Task task)
         {
-            if (id != project.Id)
+            if (id != task.Id)
             {
                 return NotFound();
             }
@@ -105,12 +95,12 @@ namespace venditiun.Controllers
             {
                 try
                 {
-                    _context.Update(project);
+                    _context.Update(task);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProjectExists(project.Id))
+                    if (!TaskExists(task.Id))
                     {
                         return NotFound();
                     }
@@ -121,10 +111,11 @@ namespace venditiun.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(project);
+            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id", task.ProjectId);
+            return View(task);
         }
 
-        [Route("/Projects/{id}/Delete")]
+        // GET: Tasks/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -132,30 +123,31 @@ namespace venditiun.Controllers
                 return NotFound();
             }
 
-            var project = await _context.Project
+            var task = await _context.Task
+                .Include(t => t.Project)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (project == null)
+            if (task == null)
             {
                 return NotFound();
             }
 
-            return View(project);
+            return View(task);
         }
 
+        // POST: Tasks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Route("/Projects/{id}/Delete/")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var project = await _context.Project.FindAsync(id);
-            _context.Project.Remove(project);
+            var task = await _context.Task.FindAsync(id);
+            _context.Task.Remove(task);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProjectExists(int id)
+        private bool TaskExists(int id)
         {
-            return _context.Project.Any(e => e.Id == id);
+            return _context.Task.Any(e => e.Id == id);
         }
     }
 }

@@ -24,5 +24,7 @@ namespace venditiun.Models
         [DataType(DataType.DateTime)]
         public DateTime UpdatedDate { get; set; }
 
+
+        public List<Task> Tasks { get; set; }
     }
 }

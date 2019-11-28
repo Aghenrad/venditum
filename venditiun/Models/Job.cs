@@ -16,21 +16,23 @@ namespace venditiun.Models
         
         public string Decription { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime BeginDate { get; set; }
         
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime EndDate { get; set; }
 
         public int CreatedBy { get; set; }
         
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime CreatedDate { get; set; }
 
         public int UpdatedBy { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime UpdatedDate { get; set; }
 
+
+        public Task Task { get; set; }
     }
 }

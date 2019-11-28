@@ -14,5 +14,6 @@ namespace venditum.Data
         {
         }
         public DbSet<Project> Project { get; set; }
+        public DbSet<venditiun.Models.Task> Task { get; set; }
     }
 }
