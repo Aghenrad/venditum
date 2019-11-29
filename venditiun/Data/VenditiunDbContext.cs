@@ -13,7 +13,24 @@ namespace venditum.Data
             : base(options)
         {
         }
-        public DbSet<Project> Project { get; set; }
-        public DbSet<venditiun.Models.Task> Task { get; set; }
+
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<UserRoleMap> UserRoleMaps { get; set; }
+
+        public DbSet<Role> Roles { get; set; }
+
+        public DbSet<Position> Positions { get; set; }
+
+        public DbSet<Project> Projects { get; set; }
+
+        public DbSet<venditiun.Models.Task> Tasks { get; set; }
+
+        public DbSet<TaskUserMap> TaskUserMaps { get; set; }
+
+        public DbSet<Job> Jobs { get; set; }
+
+        public DbSet<Status> Statuses { get; set; }
     }
+
 }

@@ -27,7 +27,7 @@ namespace venditiun.Controllers
                 return NotFound();
             }
 
-            var task = await _context.Task
+            var task = await _context.Tasks
                 .Include(t => t.Project)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (task == null)
@@ -41,7 +41,7 @@ namespace venditiun.Controllers
         // GET: Tasks/Create
         public IActionResult Create()
         {
-            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id");
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace venditiun.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id", task.ProjectId);
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
             return View(task);
         }
 
@@ -70,12 +70,12 @@ namespace venditiun.Controllers
                 return NotFound();
             }
 
-            var task = await _context.Task.FindAsync(id);
+            var task = await _context.Tasks.FindAsync(id);
             if (task == null)
             {
                 return NotFound();
             }
-            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id", task.ProjectId);
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
             return View(task);
         }
 
@@ -111,7 +111,7 @@ namespace venditiun.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProjectId"] = new SelectList(_context.Project, "Id", "Id", task.ProjectId);
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
             return View(task);
         }
 
@@ -123,7 +123,7 @@ namespace venditiun.Controllers
                 return NotFound();
             }
 
-            var task = await _context.Task
+            var task = await _context.Tasks
                 .Include(t => t.Project)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (task == null)
@@ -139,15 +139,15 @@ namespace venditiun.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var task = await _context.Task.FindAsync(id);
-            _context.Task.Remove(task);
+            var task = await _context.Tasks.FindAsync(id);
+            _context.Tasks.Remove(task);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TaskExists(int id)
         {
-            return _context.Task.Any(e => e.Id == id);
+            return _context.Tasks.Any(e => e.Id == id);
         }
     }
 }

@@ -16,6 +16,5 @@ namespace venditiun.Models
 
         public bool Privilege2 { get; set; }
 
-
     }
 }

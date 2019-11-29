@@ -17,7 +17,7 @@ namespace venditiun.Models
         
         public string Decription { get; set; }
 
-        public int Status { get; set; }
+        public int StatusId { get; set; }
 
         public int CreatedBy { get; set; }
         
@@ -30,10 +30,24 @@ namespace venditiun.Models
         public DateTime UpdatedDate { get; set; }
 
 
+        [ForeignKey("StatusId")]
+        public Status Status { get; set; }
+
+        [ForeignKey("CreatedBy")]
+        public User CreatedByUser { get; set; }
+
+        [ForeignKey("UpdatedBy")]
+        public User UpdatedByUser { get; set; }
+
+        [ForeignKey("ProjectId")]
+        public Project Project { get; set; }
+
+
+        [InverseProperty("Task")]
         public List<Job> Jobs { get; set; }
 
-        public List<TaskUserMap> TaskUser { get; set; }
-
-        public Project Project { get; set; }
+        [InverseProperty("Task")]
+        public List<TaskUserMap> TaskUserMap { get; set; }
+        
     }
 }
