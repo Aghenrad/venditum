@@ -17,7 +17,7 @@ namespace venditiun.Models
 
 
         [ForeignKey("UserId")]
-        public Task User { get; set; }
+        public User User { get; set; }
 
         [ForeignKey("RoleId")]
         public Role Role { get; set; }
