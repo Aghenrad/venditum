@@ -44,6 +44,9 @@ namespace venditiun.Controllers
             project.Tasks = _context.Tasks
                 .Where(t => t.ProjectId == id)
                 .ToList();
+            project.Status = _context.Statuses
+                .Where(s => s.Id == project.StatusId)
+                .FirstOrDefault();
 
             return View(project);
         }
@@ -64,6 +67,7 @@ namespace venditiun.Controllers
                 // TODO add user id after authorization complete
                 project.CreatedBy = 1;
                 project.UpdatedBy = 1;
+                project.StatusId = 1;
 
                 project.CreatedDate = DateTime.Now;
                 project.UpdatedDate = DateTime.Now;
@@ -94,12 +98,19 @@ namespace venditiun.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("/Projects/{id}/Edit/")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Decription,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Project project)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Decription,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Project updateForPoject)
         {
-            if (id != project.Id)
+            if (id != updateForPoject.Id)
             {
                 return NotFound();
             }
+
+            var project = await _context.Projects.FindAsync(id);
+            project.Decription = updateForPoject.Decription;
+            project.Name = updateForPoject.Name;
+            
+            project.UpdatedBy = 1;
+            project.UpdatedDate = DateTime.Now;
 
             if (ModelState.IsValid)
             {
