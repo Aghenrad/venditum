@@ -75,7 +75,7 @@ namespace venditiun.Controllers
 
         [Route("/Project/{projectid}/Task/{id}/Edit/",
             Name = "taskedit")]
-        public async Task<IActionResult> TaskEdit(int? id)
+        public async Task<IActionResult> TaskEdit(int projectid, int? id)
         {
             if (id == null)
             {
