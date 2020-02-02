@@ -4,17 +4,22 @@
     ViewData["Title"] = "Szczegóły";
 }
 
-<h1>Szczegóły projektu: @Html.DisplayFor(model => model.Name)</h1>
+<h1>Projekt: @Html.DisplayFor(model => model.Name)</h1>
+<hr />
 
 <div>
-    <h4>@Html.DisplayFor(model => model.Decription)</h4>
-    <hr />
     <dl class="row">
         <dt class="col-sm-3">
             Status
         </dt>
         <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Status.Name)
+        </dd>
+        <dt class="col-sm-3">
+            Opis
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Decription)
         </dd>
         <dt class="col-sm-3">
             Stworzone przez
@@ -99,7 +104,7 @@
                     </td>
                     <td>
                         <a asp-route="taskedit" asp-route-id="@task.Id" asp-route-projectid="@task.ProjectId">Edytuj</a> |
-                        <a asp-route="taskdetails" asp-route-id="@task.Id" asp-route-projectid="@task.ProjectId">Szczegóły</a> |
+                        <a asp-route="taskdetails" asp-route-id="@task.Id" asp-route-projectid="@task.ProjectId">Szczegóły</a> 
                     </td>
                 </tr>
             }

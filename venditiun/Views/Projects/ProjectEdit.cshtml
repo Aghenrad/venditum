@@ -4,12 +4,15 @@
     ViewData["Title"] = "Edycja";
 }
 
-<h1>Edycja projektu</h1>
+<h1>Edycja</h1>
+
+<h4>Projektu</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="ProjectEdit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="StatusId" class="control-label">Status</label>
                 <select asp-for="StatusId" class="form-control" asp-items="ViewBag.StatusId"></select>
@@ -32,6 +35,6 @@
 </div>
 
 <div>
-    <a asp-action="ProjectsList">Powróć do listy projektów</a>
+    <a asp-route="projectdetails" asp-route-id="@Model.Id">Powrót do projektu</a>
 </div>
 

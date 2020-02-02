@@ -30,28 +30,37 @@ namespace venditiun.Controllers
             }
 
             var task = await _context.Tasks
-                .Include(t => t.Project)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (task == null)
             {
                 return NotFound();
             }
 
+            task.Status = await _context.Statuses
+                .Where(s => s.Id == task.StatusId)
+                .FirstOrDefaultAsync();
+            task.Project = await _context.Projects
+                .Where(p => p.Id == task.ProjectId)
+                .FirstOrDefaultAsync();
+            task.CreatedByUser = await _context.Users
+                .Where(u => u.Id == task.CreatedBy)
+                .FirstOrDefaultAsync();
+            task.UpdatedByUser = await _context.Users
+                .Where(u => u.Id == task.UpdatedBy)
+                .FirstOrDefaultAsync();
             task.Jobs = _context.Jobs
                 .Where(j => j.TaskId == id)
                 .ToList();
-            task.Status = _context.Statuses
-                .Where(s => s.Id == task.StatusId)
-                .FirstOrDefault();
 
             return View(task);
         }
 
         [Route("/Project/{projectid}/Task/Create",
             Name = "taskcreate")]
-        public IActionResult TaskCreate()
+        public IActionResult TaskCreate(int projectid)
         {
-            return View();
+            return View(new Models.Task() { ProjectId = projectid });
         }
 
         [HttpPost]
@@ -62,11 +71,11 @@ namespace venditiun.Controllers
         {
             if (ModelState.IsValid)
             {
-                // TODO add user id after authorization complete
+                //TODO add logged user id
                 task.CreatedBy = 1;
                 task.UpdatedBy = 1;
-                task.StatusId = 1;
 
+                task.StatusId = 1;
                 task.CreatedDate = DateTime.Now;
                 task.UpdatedDate = DateTime.Now;
 
@@ -76,7 +85,7 @@ namespace venditiun.Controllers
                 return RedirectToAction("TaskDetails", new RouteValueDictionary(
                     new { controller = "Tasks", action = "TaskDetails", projectid = task.ProjectId, id = task.Id}));
             }
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
+            
             return View(task);
         }
 
@@ -90,16 +99,27 @@ namespace venditiun.Controllers
             }
 
             var task = await _context.Tasks.FindAsync(id);
+
             if (task == null)
             {
                 return NotFound();
             }
 
-            task.Status = _context.Statuses
+            task.Status = await _context.Statuses
                 .Where(s => s.Id == task.StatusId)
-                .FirstOrDefault();
-
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
+                .FirstOrDefaultAsync();
+            task.CreatedByUser = await _context.Users
+                .Where(u => u.Id == task.CreatedBy)
+                .FirstOrDefaultAsync();
+            task.UpdatedByUser = await _context.Users
+                .Where(u => u.Id == task.UpdatedBy)
+                .FirstOrDefaultAsync();
+            task.Jobs = _context.Jobs
+                .Where(j => j.TaskId == id)
+                .ToList();
+            
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name", task.StatusId);
+            
             return View(task);
         }
 
@@ -107,12 +127,22 @@ namespace venditiun.Controllers
         [ValidateAntiForgeryToken]
         [Route("/Project/{projectid}/Task/{id}/Edit/",
             Name = "taskedit")]
-        public async Task<IActionResult> TaskEdit(int id, [Bind("Id,ProjectId,Name,Decription,Status,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Models.Task task)
+        public async Task<IActionResult> TaskEdit(int id, [Bind("Id,ProjectId,Name,Decription,StatusId")] Models.Task updateForTask)
         {
-            if (id != task.Id)
+            if (id != updateForTask.Id)
             {
                 return NotFound();
             }
+
+            var task = await _context.Tasks.FindAsync(id);
+
+            task.Name = updateForTask.Name;
+            task.Decription = updateForTask.Decription;
+            task.StatusId = updateForTask.StatusId;
+
+            //TODO add logged user id
+            task.UpdatedBy = 1;
+            task.UpdatedDate = DateTime.Now;
 
             if (ModelState.IsValid)
             {
@@ -135,42 +165,10 @@ namespace venditiun.Controllers
                 return RedirectToAction("TaskDetails", new RouteValueDictionary(
                     new { controller = "Tasks", action = "TaskDetails", projectid = task.ProjectId, id = task.Id }));
             }
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
-            return View(task);
-        }
 
-        [Route("/Project/{projectid}/Task/{id}/Delete/",
-            Name = "taskdelete")]
-        public async Task<IActionResult> TaskDelete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var task = await _context.Tasks
-                .Include(t => t.Project)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (task == null)
-            {
-                return NotFound();
-            }
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name", task.StatusId);
 
             return View(task);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Route("/Project/{projectid}/Task/{id}/Delete/",
-            Name = "taskdelete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var task = await _context.Tasks.FindAsync(id);
-            _context.Tasks.Remove(task);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction("ProjectDetails", new RouteValueDictionary(
-                    new { controller = "Projects", action = "ProjectDetails", id = task.ProjectId }));
         }
 
         private bool TaskExists(int id)

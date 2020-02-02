@@ -4,15 +4,14 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Dodaj</h1>
 
-<h4>Task</h4>
+<h4>Zadanie</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="TaskCreate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input value="@ViewContext.RouteData.Values["projectid"]" type="hidden" readonly />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -31,6 +30,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-route="projectdetails" asp-route-id="@Model.ProjectId">Powrót do projektu</a>
 </div>
 

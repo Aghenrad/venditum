@@ -15,7 +15,7 @@ namespace venditiun.Models
 
         public int UserId { get; set; }
         
-        public int Decription { get; set; }
+        public string Decription { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime BeginDate { get; set; }

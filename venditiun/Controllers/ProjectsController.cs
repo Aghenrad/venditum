@@ -75,6 +75,13 @@ namespace venditiun.Controllers
                 .Where(t => t.ProjectId == project.Id)
                 .ToListAsync();
 
+            foreach (Models.Task task in project.Tasks)
+            {
+                task.Status = await _context.Statuses
+                .Where(s => s.Id == task.StatusId)
+                .FirstOrDefaultAsync();
+            }
+
             return View(project);
         }
 
@@ -93,11 +100,11 @@ namespace venditiun.Controllers
         {
             if (ModelState.IsValid)
             {
-                // TODO add user id after authorization complete
+                //TODO add logged user id
                 project.CreatedBy = 1;
                 project.UpdatedBy = 1;
-                project.StatusId = 1;
 
+                project.StatusId = 1;
                 project.CreatedDate = DateTime.Now;
                 project.UpdatedDate = DateTime.Now;
 
@@ -154,10 +161,11 @@ namespace venditiun.Controllers
 
             var project = await _context.Projects.FindAsync(id);
 
-            project.Decription = updateForPoject.Decription;
             project.Name = updateForPoject.Name;
+            project.Decription = updateForPoject.Decription;
             project.StatusId = updateForPoject.StatusId;
 
+            //TODO add logged user id
             project.UpdatedBy = 1;
             project.UpdatedDate = DateTime.Now;
 
@@ -181,6 +189,8 @@ namespace venditiun.Controllers
                 }
                 return RedirectToAction(nameof(ProjectsList));
             }
+
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name", project.StatusId);
 
             return View(project);
         }
