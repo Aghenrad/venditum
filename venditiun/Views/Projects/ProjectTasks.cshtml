@@ -96,7 +96,7 @@
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@task.Id">Edytuj</a> |
-                    <a asp-action="ProjectTasks" asp-route-id="@task.Id">Szczegóły</a> |
+                    <a asp-route-id="@task.Id" asp-route="taskdetails" asp-route-projetctid="@task.ProjectId">Szczegóły</a> |
                     <a asp-action="Delete" asp-route-id="@task.Id">Usuń</a>
                 </td>
             </tr>
@@ -106,5 +106,5 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a> |
-    <a asp-action="Index">Powróć o listy projektów</a>
+    <a asp-action="Index">Powrót o listy projektów</a>
 </div>

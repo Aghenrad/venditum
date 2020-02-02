@@ -1,0 +1,125 @@
+﻿@model venditiun.Models.Task
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Task</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Decription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Decription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdatedBy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UpdatedBy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UpdatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UpdatedDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Project)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Project.Id)
+        </dd>
+    </dl>
+    <hr />
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Nazwa
+                </th>
+                <th>
+                    Opis
+                </th>
+                <th>
+                    Stworzone przez
+                </th>
+                <th>
+                    Data utworzenia
+                </th>
+                <th>
+                    Zaktualizowane przez
+                </th>
+                <th>
+                    Data aktualizacji
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var job in Model.Jobs)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modeltask => job.Status.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modeltask => job.Decription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modeltask => job.CreatedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modeltask => job.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modeltask => job.UpdatedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modeltask => job.UpdatedDate)
+                    </td>
+                    <td>
+                        <a asp-controller="Task" asp-action="Edit" asp-route-id="@job.Id">Edytuj</a> |
+                        <a asp-route-id="@job.Id" asp-route="jobdetails" asp-route-projetctid="@job.Id" asp-route-taskid="@job.TaskId">Szczegóły</a> |
+                        <a asp-controller="Task" asp-action="Delete" asp-route-id="@job.Id">Usuń</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a> |
+    <a asp-route="projecttasks" asp-route-id="@Model.ProjectId">Powrót do projektu</a>
+</div>

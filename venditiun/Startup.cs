@@ -12,6 +12,7 @@ using venditum.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using venditiun.Data;
 
 namespace venditum
 {
@@ -30,6 +31,7 @@ namespace venditum
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            //services.Add(new ServiceDescriptor(typeof(MySQLContext), new MySQLContext(Configuration.GetConnectionString("DefaultConnection"))));
             services.AddDbContext<VenditiunDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("VenditiunConnection")));
         }

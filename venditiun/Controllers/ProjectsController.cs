@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using venditiun.Data;
 using venditiun.Models;
 using venditum.Data;
 
@@ -17,6 +18,7 @@ namespace venditiun.Controllers
         public ProjectsController(VenditiunDbContext context)
         {
             _context = context;
+
         }
 
         [Route("/Projects/")]
@@ -25,7 +27,8 @@ namespace venditiun.Controllers
             return View(await _context.Projects.ToListAsync());
         }
 
-        [Route("/Project/{id}/Tasks/")]
+        [Route("/Project/{id}/Tasks/",
+            Name ="projecttasks")]
         public async Task<IActionResult> ProjectTasks(int? id)
         {
             if (id == null)

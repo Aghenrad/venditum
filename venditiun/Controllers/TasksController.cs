@@ -19,8 +19,9 @@ namespace venditiun.Controllers
             _context = context;
         }
 
-        [Route("/Project/Task/Detail/{id}")]
-        public async Task<IActionResult> Details(int? id)
+        [Route("/Project/{projetctid}/Task/{id}",
+            Name = "taskdetails")]
+        public async Task<IActionResult> TaskDetails(int? id)
         {
             if (id == null)
             {

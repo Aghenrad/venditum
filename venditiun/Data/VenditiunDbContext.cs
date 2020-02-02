@@ -24,7 +24,7 @@ namespace venditum.Data
 
         public DbSet<Project> Projects { get; set; }
 
-        public DbSet<venditiun.Models.Task> Tasks { get; set; }
+        public DbSet<Task> Tasks { get; set; }
 
         public DbSet<TaskUserMap> TaskUserMaps { get; set; }
 

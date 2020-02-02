@@ -333,3 +333,4 @@ ASALocalRun/
 /venditiun/Migrations/20191012132511_InitialCreate.Designer.cs
 /venditiun/Migrations/VenditiunDbContextModelSnapshot.cs
 /venditiun/Migrations/
+/venditiun/Data/MySQLContext.cs
