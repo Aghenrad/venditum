@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                Status
+            </th>
+            <th>
                 Nazwa
             </th>
             <th>
@@ -34,32 +37,35 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Decription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedDate)
-            </td>
-            <td>
-                <a asp-action="ProjectEdit" asp-route-id="@item.Id">Edytuj</a> |
-                <a asp-action="ProjectDetails" asp-route-id="@item.Id">Szczegóły</a> |
-                <a asp-action="ProjectDelete" asp-route-id="@item.Id">Usuń</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Decription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedByUser.Firstname) @Html.DisplayFor(modelItem => item.CreatedByUser.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedByUser.Firstname) @Html.DisplayFor(modelItem => item.UpdatedByUser.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdatedDate)
+                </td>
+                <td>
+                    <a asp-action="ProjectEdit" asp-route-id="@item.Id">Edytuj</a> |
+                    <a asp-action="ProjectDetails" asp-route-id="@item.Id">Szczegóły</a> |
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

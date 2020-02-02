@@ -20,7 +20,7 @@ namespace venditiun.Controllers
             _context = context;
         }
 
-        [Route("/Project/{projetctid}/Task/{id}",
+        [Route("/Project/{projectid}/Task/{id}",
             Name = "taskdetails")]
         public async Task<IActionResult> TaskDetails(int? id)
         {
@@ -36,6 +36,13 @@ namespace venditiun.Controllers
             {
                 return NotFound();
             }
+
+            task.Jobs = _context.Jobs
+                .Where(j => j.TaskId == id)
+                .ToList();
+            task.Status = _context.Statuses
+                .Where(s => s.Id == task.StatusId)
+                .FirstOrDefault();
 
             return View(task);
         }
@@ -67,7 +74,7 @@ namespace venditiun.Controllers
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("TaskDetails", new RouteValueDictionary(
-                    new { controller = "Tasks", action = "TaskDetails", projetctid = task.ProjectId, id = task.Id}));
+                    new { controller = "Tasks", action = "TaskDetails", projectid = task.ProjectId, id = task.Id}));
             }
             ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
             return View(task);
@@ -87,6 +94,11 @@ namespace venditiun.Controllers
             {
                 return NotFound();
             }
+
+            task.Status = _context.Statuses
+                .Where(s => s.Id == task.StatusId)
+                .FirstOrDefault();
+
             ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
             return View(task);
         }
@@ -120,7 +132,8 @@ namespace venditiun.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("TaskDetails", new RouteValueDictionary(
+                    new { controller = "Tasks", action = "TaskDetails", projectid = task.ProjectId, id = task.Id }));
             }
             ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
             return View(task);
@@ -155,7 +168,9 @@ namespace venditiun.Controllers
             var task = await _context.Tasks.FindAsync(id);
             _context.Tasks.Remove(task);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction("ProjectDetails", new RouteValueDictionary(
+                    new { controller = "Projects", action = "ProjectDetails", id = task.ProjectId }));
         }
 
         private bool TaskExists(int id)

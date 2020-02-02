@@ -26,7 +26,7 @@
             @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Status)
+            @Html.DisplayFor(model => model.Status.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedBy)
@@ -88,7 +88,7 @@
             </tr>
         </thead>
         <tbody>
-            @*@foreach (var job in Model.Jobs)
+            @foreach (var job in Model.Jobs)
             {
                 <tr>
                     <td>
@@ -111,15 +111,15 @@
                     </td>
                     <td>
                         <a asp-controller="Task" asp-action="Edit" asp-route-id="@job.Id">Edytuj</a> |
-                        <a asp-route-id="@job.Id" asp-route="jobdetails" asp-route-projetctid="@job.Id" asp-route-taskid="@job.TaskId">Szczegóły</a> |
+                        <a asp-route-id="@job.Id" asp-route="jobdetails" asp-route-projectid="@job.Id" asp-route-taskid="@job.TaskId">Szczegóły</a> |
                         <a asp-controller="Task" asp-action="Delete" asp-route-id="@job.Id">Usuń</a>
                     </td>
                 </tr>
-            }*@
+            }
         </tbody>
     </table>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a> |
-    <a asp-route="projecttasks" asp-route-id="@Model.ProjectId">Powrót do projektu</a>
+    <a asp-route="taskedit" asp-route-id="@Model.Id" asp-route-projectid="@Model.ProjectId">Edytuj</a> |
+    <a asp-route="projectdetails" asp-route-id="@Model.ProjectId">Powrót do projektu</a>
 </div>

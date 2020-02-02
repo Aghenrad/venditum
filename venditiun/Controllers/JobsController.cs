@@ -19,7 +19,7 @@ namespace venditiun.Controllers
             _context = context;
         }
 
-        [Route("/Project/{projetctid}/Task/{taskId}/Job/{id}",
+        [Route("/Project/{projectid}/Task/{taskId}/Job/{id}",
             Name = "jobdetails")]
         public async Task<IActionResult> JobDetails()
         {

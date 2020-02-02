@@ -20,7 +20,7 @@
             Stworzone przez
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.CreatedBy)
+            @Html.DisplayFor(model => model.CreatedByUser.Firstname) @Html.DisplayFor(model => model.CreatedByUser.LastName)
         </dd>
         <dt class="col-sm-3">
             Data utworzenia
@@ -32,7 +32,7 @@
             Zaktualizowane przez
         </dt>
         <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.UpdatedBy)
+            @Html.DisplayFor(model => model.UpdatedByUser.Firstname) @Html.DisplayFor(model => model.UpdatedByUser.LastName)
         </dd>
         <dt class="col-sm-3">
             Data aktualizacji
@@ -86,21 +86,20 @@
                         @Html.DisplayFor(modeltask => task.Decription)
                     </td>
                     <td>
-                        @Html.DisplayFor(modeltask => task.CreatedBy)
+                        @Html.DisplayFor(modeltask => task.CreatedByUser.Firstname) @Html.DisplayFor(modeltask => task.CreatedByUser.LastName)
                     </td>
                     <td>
                         @Html.DisplayFor(modeltask => task.CreatedDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(modeltask => task.UpdatedBy)
+                        @Html.DisplayFor(modeltask => task.UpdatedByUser.Firstname) @Html.DisplayFor(modeltask => task.UpdatedByUser.LastName)
                     </td>
                     <td>
                         @Html.DisplayFor(modeltask => task.UpdatedDate)
                     </td>
                     <td>
-                        <a asp-route-id="@task.Id" asp-route="taskedit" asp-route-projetctid="@task.ProjectId">Edytuj</a> |
-                        <a asp-route-id="@task.Id" asp-route="taskdetails" asp-route-projetctid="@task.ProjectId">Szczegóły</a> |
-                        <a asp-route-id="@task.Id" asp-route="taskdelete" asp-route-projetctid="@task.ProjectId">Usuń</a>
+                        <a asp-route="taskedit" asp-route-id="@task.Id" asp-route-projectid="@task.ProjectId">Edytuj</a> |
+                        <a asp-route="taskdetails" asp-route-id="@task.Id" asp-route-projectid="@task.ProjectId">Szczegóły</a> |
                     </td>
                 </tr>
             }

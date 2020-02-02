@@ -24,7 +24,25 @@ namespace venditiun.Controllers
             Name = "projectslist")]
         public async Task<IActionResult> ProjectsList()
         {
-            return View(await _context.Projects.ToListAsync());
+            List<Project> projects = await _context.Projects.ToListAsync();
+
+            foreach (Project project in projects)
+            {
+                project.Status = await _context.Statuses
+                    .Where(s => s.Id == project.StatusId)
+                    .FirstOrDefaultAsync();
+                project.CreatedByUser = await _context.Users
+                    .Where(u => u.Id == project.CreatedBy)
+                    .FirstOrDefaultAsync();
+                project.UpdatedByUser = await _context.Users
+                    .Where(u => u.Id == project.UpdatedBy)
+                    .FirstOrDefaultAsync();
+                project.Tasks = await _context.Tasks
+                    .Where(t => t.ProjectId == project.Id)
+                    .ToListAsync();
+            }
+
+            return View(projects); 
         }
 
         [Route("/Project/{id}/Tasks/",
@@ -44,12 +62,18 @@ namespace venditiun.Controllers
                 return NotFound();
             }
 
-            project.Tasks = _context.Tasks
-                .Where(t => t.ProjectId == id)
-                .ToList();
-            project.Status = _context.Statuses
+            project.Status = await _context.Statuses
                 .Where(s => s.Id == project.StatusId)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
+            project.CreatedByUser = await _context.Users
+                .Where(u => u.Id == project.CreatedBy)
+                .FirstOrDefaultAsync();
+            project.UpdatedByUser = await _context.Users
+                .Where(u => u.Id == project.UpdatedBy)
+                .FirstOrDefaultAsync();
+            project.Tasks = await _context.Tasks
+                .Where(t => t.ProjectId == project.Id)
+                .ToListAsync();
 
             return View(project);
         }
@@ -98,6 +122,22 @@ namespace venditiun.Controllers
             {
                 return NotFound();
             }
+
+            project.Status = await _context.Statuses
+                .Where(s => s.Id == project.StatusId)
+                .FirstOrDefaultAsync();
+            project.CreatedByUser = await _context.Users
+                .Where(u => u.Id == project.CreatedBy)
+                .FirstOrDefaultAsync();
+            project.UpdatedByUser = await _context.Users
+                .Where(u => u.Id == project.UpdatedBy)
+                .FirstOrDefaultAsync();
+            project.Tasks = await _context.Tasks
+                .Where(t => t.ProjectId == project.Id)
+                .ToListAsync();
+
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name", project.StatusId);
+
             return View(project);
         }
 
@@ -105,7 +145,7 @@ namespace venditiun.Controllers
         [ValidateAntiForgeryToken]
         [Route("/Project/{id}/Edit/",
             Name = "projectedit")]
-        public async Task<IActionResult> ProjectEdit(int id, [Bind("Id,Name,Decription,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Project updateForPoject)
+        public async Task<IActionResult> ProjectEdit(int id, [Bind("Id,Name,Decription,StatusId")] Project updateForPoject)
         {
             if (id != updateForPoject.Id)
             {
@@ -113,8 +153,10 @@ namespace venditiun.Controllers
             }
 
             var project = await _context.Projects.FindAsync(id);
+
             project.Decription = updateForPoject.Decription;
             project.Name = updateForPoject.Name;
+            project.StatusId = updateForPoject.StatusId;
 
             project.UpdatedBy = 1;
             project.UpdatedDate = DateTime.Now;
@@ -139,38 +181,8 @@ namespace venditiun.Controllers
                 }
                 return RedirectToAction(nameof(ProjectsList));
             }
-            return View(project);
-        }
-
-        [Route("/Project/{id}/Delete",
-            Name = "projectdelete")]
-        public async Task<IActionResult> ProjectDelete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var project = await _context.Projects
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (project == null)
-            {
-                return NotFound();
-            }
 
             return View(project);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Route("/Project/{id}/Delete/",
-            Name = "projectdelete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var project = await _context.Projects.FindAsync(id);
-            _context.Projects.Remove(project);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(ProjectsList));
         }
 
         private bool ProjectExists(int id)
