@@ -64,7 +64,7 @@ namespace venditiun.Controllers
         [ValidateAntiForgeryToken]
         [Route("/Project/{projectid}/Task/{taskid}/Job/Create",
             Name = "jobcreate")]
-        public async Task<IActionResult> JobCreate([Bind("Id,ProjectId,Name,Decription,Status,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Models.Job job)
+        public async Task<IActionResult> JobCreate(int projectid, int taskid, [Bind("Id,ProjectId,TaskId,Decription,BeginDate,EndDate")] Job job)
         {
             if (ModelState.IsValid)
             {
@@ -73,6 +73,7 @@ namespace venditiun.Controllers
                 job.UpdatedBy = 1;
 
                 job.StatusId = 1;
+                job.UserId = 1;
                 job.CreatedDate = DateTime.Now;
                 job.UpdatedDate = DateTime.Now;
 
@@ -80,7 +81,7 @@ namespace venditiun.Controllers
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("JobDetails", new RouteValueDictionary(
-                    new { controller = "Jobs", action = "JobDetails", projectid = job.Task.ProjectId, taskid = job.TaskId, id = job.Id }));
+                    new { controller = "Jobs", action = "JobDetails", projectid = projectid, taskid = taskid, id = job.Id }));
             }
 
             return View(job);
@@ -120,7 +121,7 @@ namespace venditiun.Controllers
         [ValidateAntiForgeryToken]
         [Route("/Project/{projectid}/Task/{taskid}/Job/{id}/Edit/",
             Name = "jobedit")]
-        public async Task<IActionResult> JobEdit(int id, [Bind("Id,ProjectId,Name,Decription,StatusId")] Models.Job updateForJob)
+        public async Task<IActionResult> JobEdit(int id, int projectid, int taskid, [Bind("Id,ProjectId,TaskId,Decription,StatusId")] Job updateForJob)
         {
             if (id != updateForJob.Id)
             {
@@ -155,7 +156,7 @@ namespace venditiun.Controllers
                     }
                 }
                 return RedirectToAction("JobDetails", new RouteValueDictionary(
-                    new { controller = "Jobs", action = "JobDetails", projectid = job.Task.ProjectId, taskid = job.TaskId, id = job.Id }));
+                    new { controller = "Jobs", action = "JobDetails", projectid = projectid, taskid = taskid, id = id }));
             }
 
             ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Name", job.StatusId);

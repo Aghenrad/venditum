@@ -67,7 +67,7 @@ namespace venditiun.Controllers
         [ValidateAntiForgeryToken]
         [Route("/Project/{projectid}/Task/Create",
             Name = "taskcreate")]
-        public async Task<IActionResult> TaskCreate([Bind("Id,ProjectId,Name,Decription,Status,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Models.Task task)
+        public async Task<IActionResult> TaskCreate([Bind("Id,ProjectId,Name,Decription")] Models.Task task)
         {
             if (ModelState.IsValid)
             {
