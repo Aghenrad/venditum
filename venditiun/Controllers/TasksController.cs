@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using venditiun.Models;
 using venditum.Data;
@@ -39,32 +40,42 @@ namespace venditiun.Controllers
             return View(task);
         }
 
-        // GET: Tasks/Create
-        public IActionResult Create()
+        [Route("/Project/{projectid}/Task/Create",
+            Name = "taskcreate")]
+        public IActionResult TaskCreate()
         {
-            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id");
             return View();
         }
 
-        // POST: Tasks/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProjectId,Name,Decription,Status,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Models.Task task)
+        [Route("/Project/{projectid}/Task/Create",
+            Name = "taskcreate")]
+        public async Task<IActionResult> TaskCreate([Bind("Id,ProjectId,Name,Decription,Status,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Models.Task task)
         {
             if (ModelState.IsValid)
             {
+                // TODO add user id after authorization complete
+                task.CreatedBy = 1;
+                task.UpdatedBy = 1;
+                task.StatusId = 1;
+
+                task.CreatedDate = DateTime.Now;
+                task.UpdatedDate = DateTime.Now;
+
                 _context.Add(task);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction("TaskDetails", new RouteValueDictionary(
+                    new { controller = "Tasks", action = "TaskDetails", projetctid = task.ProjectId, id = task.Id}));
             }
             ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "Id", task.ProjectId);
             return View(task);
         }
 
-        // GET: Tasks/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [Route("/Project/{projectid}/Task/{id}/Edit/",
+            Name = "taskedit")]
+        public async Task<IActionResult> TaskEdit(int? id)
         {
             if (id == null)
             {
@@ -80,12 +91,11 @@ namespace venditiun.Controllers
             return View(task);
         }
 
-        // POST: Tasks/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProjectId,Name,Decription,Status,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Models.Task task)
+        [Route("/Project/{projectid}/Task/{id}/Edit/",
+            Name = "taskedit")]
+        public async Task<IActionResult> TaskEdit(int id, [Bind("Id,ProjectId,Name,Decription,Status,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Models.Task task)
         {
             if (id != task.Id)
             {
@@ -116,8 +126,9 @@ namespace venditiun.Controllers
             return View(task);
         }
 
-        // GET: Tasks/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [Route("/Project/{projectid}/Task/{id}/Delete/",
+            Name = "taskdelete")]
+        public async Task<IActionResult> TaskDelete(int? id)
         {
             if (id == null)
             {
@@ -135,9 +146,10 @@ namespace venditiun.Controllers
             return View(task);
         }
 
-        // POST: Tasks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Route("/Project/{projectid}/Task/{id}/Delete/",
+            Name = "taskdelete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var task = await _context.Tasks.FindAsync(id);

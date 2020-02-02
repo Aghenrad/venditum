@@ -7,7 +7,7 @@
 <h1>Projekty</h1>
 
 <p>
-    <a asp-action="Create">Dodaj projekt</a>
+    <a asp-action="ProjectCreate">Dodaj projekt</a>
 </p>
 <table class="table table-striped">
     <thead>
@@ -55,9 +55,9 @@
                 @Html.DisplayFor(modelItem => item.UpdatedDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a> |
-                <a asp-action="ProjectTasks" asp-route-id="@item.Id">Szczegóły</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+                <a asp-action="ProjectEdit" asp-route-id="@item.Id">Edytuj</a> |
+                <a asp-action="ProjectDetails" asp-route-id="@item.Id">Szczegóły</a> |
+                <a asp-action="ProjectDelete" asp-route-id="@item.Id">Usuń</a>
             </td>
         </tr>
 }

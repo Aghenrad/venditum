@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using venditiun.Data;
 using venditiun.Models;
 using venditum.Data;
 
@@ -21,15 +20,16 @@ namespace venditiun.Controllers
 
         }
 
-        [Route("/Projects/")]
-        public async Task<IActionResult> Index()
+        [Route("/Projects/",
+            Name = "projectslist")]
+        public async Task<IActionResult> ProjectsList()
         {
             return View(await _context.Projects.ToListAsync());
         }
 
         [Route("/Project/{id}/Tasks/",
-            Name ="projecttasks")]
-        public async Task<IActionResult> ProjectTasks(int? id)
+            Name = "projectdetails")]
+        public async Task<IActionResult> ProjectDetails(int? id)
         {
             if (id == null)
             {
@@ -54,16 +54,18 @@ namespace venditiun.Controllers
             return View(project);
         }
 
-        [Route("/Projects/Create")]
-        public IActionResult Create()
+        [Route("/Project/Create",
+            Name = "projectcreate")]
+        public IActionResult ProjectCreate()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("/Projects/Create")]
-        public async Task<IActionResult> Create([Bind("Id,Name,Decription,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Project project)
+        [Route("/Project/Create",
+            Name = "projectcreate")]
+        public async Task<IActionResult> ProjectCreate([Bind("Id,Name,Decription,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Project project)
         {
             if (ModelState.IsValid)
             {
@@ -77,13 +79,14 @@ namespace venditiun.Controllers
 
                 _context.Add(project);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ProjectsList));
             }
             return View(project);
         }
 
-        [Route("/Projects/{id}/Edit/")]
-        public async Task<IActionResult> Edit(int? id)
+        [Route("/Project/{id}/Edit/",
+            Name = "projectedit")]
+        public async Task<IActionResult> ProjectEdit(int? id)
         {
             if (id == null)
             {
@@ -100,8 +103,9 @@ namespace venditiun.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("/Projects/{id}/Edit/")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Decription,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Project updateForPoject)
+        [Route("/Project/{id}/Edit/",
+            Name = "projectedit")]
+        public async Task<IActionResult> ProjectEdit(int id, [Bind("Id,Name,Decription,CreatedBy,CreatedDate,UpdatedBy,UpdatedDate")] Project updateForPoject)
         {
             if (id != updateForPoject.Id)
             {
@@ -111,7 +115,7 @@ namespace venditiun.Controllers
             var project = await _context.Projects.FindAsync(id);
             project.Decription = updateForPoject.Decription;
             project.Name = updateForPoject.Name;
-            
+
             project.UpdatedBy = 1;
             project.UpdatedDate = DateTime.Now;
 
@@ -133,13 +137,14 @@ namespace venditiun.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ProjectsList));
             }
             return View(project);
         }
 
-        [Route("/Projects/{id}/Delete")]
-        public async Task<IActionResult> Delete(int? id)
+        [Route("/Project/{id}/Delete",
+            Name = "projectdelete")]
+        public async Task<IActionResult> ProjectDelete(int? id)
         {
             if (id == null)
             {
@@ -158,13 +163,14 @@ namespace venditiun.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Route("/Projects/{id}/Delete/")]
+        [Route("/Project/{id}/Delete/",
+            Name = "projectdelete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var project = await _context.Projects.FindAsync(id);
             _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ProjectsList));
         }
 
         private bool ProjectExists(int id)

@@ -42,6 +42,9 @@
         </dd>
     </dl>
     <hr />
+    <p>
+        <a asp-route="taskcreate" asp-route-projectid="@Model.Id">Dodaj zadanie</a>
+    </p>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -72,39 +75,39 @@
         <tbody>
             @foreach (var task in Model.Tasks)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modeltask => task.Status.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modeltask => task.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modeltask => task.Decription)
-                </td>
-                <td>
-                    @Html.DisplayFor(modeltask => task.CreatedBy)
-                </td>
-                <td>
-                    @Html.DisplayFor(modeltask => task.CreatedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modeltask => task.UpdatedBy)
-                </td>
-                <td>
-                    @Html.DisplayFor(modeltask => task.UpdatedDate)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@task.Id">Edytuj</a> |
-                    <a asp-route-id="@task.Id" asp-route="taskdetails" asp-route-projetctid="@task.ProjectId">Szczegóły</a> |
-                    <a asp-action="Delete" asp-route-id="@task.Id">Usuń</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modeltask => task.Status.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modeltask => task.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modeltask => task.Decription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modeltask => task.CreatedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modeltask => task.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modeltask => task.UpdatedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modeltask => task.UpdatedDate)
+                    </td>
+                    <td>
+                        <a asp-route-id="@task.Id" asp-route="taskedit" asp-route-projetctid="@task.ProjectId">Edytuj</a> |
+                        <a asp-route-id="@task.Id" asp-route="taskdetails" asp-route-projetctid="@task.ProjectId">Szczegóły</a> |
+                        <a asp-route-id="@task.Id" asp-route="taskdelete" asp-route-projetctid="@task.ProjectId">Usuń</a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edytuj</a> |
-    <a asp-action="Index">Powrót o listy projektów</a>
+    <a asp-action="ProjectEdit" asp-route-id="@Model.Id">Edytuj</a> |
+    <a asp-action="ProjectsList">Powrót o listy projektów</a>
 </div>
